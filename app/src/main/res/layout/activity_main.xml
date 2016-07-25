@@ -9,23 +9,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.bidivi.chatapp.MainActivity">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/message"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_above="@+id/sendBtn"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="45dp" />
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Connect"
         android:id="@+id/sendBtn"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/radioGroup"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="27dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -33,7 +24,53 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="What do you need help with?"
         android:id="@+id/textView"
-        android:layout_above="@+id/message"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="42dp" />
+        android:layout_marginTop="30dp" />
+
+    <RadioGroup
+        android:layout_width="150dp"
+        android:layout_height="180dp"
+        android:id="@+id/radioGroup"
+        android:layout_marginTop="28dp"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Drug Abuse"
+            android:id="@+id/radioButton"
+            android:checked="false" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Alcoholism"
+            android:id="@+id/radioButton2"
+            android:checked="false" />
+
+        <RadioButton
+            android:layout_width="137dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButton3"
+            android:checked="false"
+            android:text="Depression" />
+
+        <RadioButton
+            android:layout_width="134dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButton4"
+            android:checked="false"
+            android:text="Relationships" />
+
+        <RadioButton
+            android:layout_width="218dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButton5"
+            android:checked="false"
+            android:text="Anger Issues" />
+
+    </RadioGroup>
+
 </RelativeLayout>

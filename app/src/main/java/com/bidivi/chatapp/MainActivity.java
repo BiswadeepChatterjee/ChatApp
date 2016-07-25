@@ -6,27 +6,86 @@ import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 public class MainActivity extends AppCompatActivity {
 
     Button sendSms;
-    EditText editText;
+    RadioGroup radioGroup;
+    RadioButton radioButton;
+    RadioButton radioButton2;
+    RadioButton radioButton3;
+    RadioButton radioButton4;
+    RadioButton radioButton5;
+    String myMsg;
     String stuff;
     String helper = "4086878302"; // should have a lot of numbers in database
+    String moderator = "8285392311";
     // each person that needs help is connected to another in
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        editText = (EditText) findViewById(R.id.message);
         sendSms = (Button) findViewById(R.id.sendBtn);
+        radioButton = (RadioButton) findViewById(R.id.radioButton);
+        radioButton2 = (RadioButton) findViewById(R.id.radioButton2);
+        radioButton3 = (RadioButton) findViewById(R.id.radioButton3);
+        radioButton4 = (RadioButton) findViewById(R.id.radioButton4);
+        radioButton5 = (RadioButton) findViewById(R.id.radioButton5);
+        radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                switch (checkedId) {
+                    case R.id.radioButton:
+
+                        RadioButton r = (RadioButton) findViewById(R.id.radioButton);
+                        myMsg = r.getText().toString();
+
+                        break;
+
+                    case R.id.radioButton2:
+
+                        RadioButton r2 = (RadioButton) findViewById(R.id.radioButton2);
+                        myMsg = r2.getText().toString();
+
+                        break;
+                    case R.id.radioButton3:
+
+                        RadioButton r3 = (RadioButton) findViewById(R.id.radioButton3);
+                        myMsg = r3.getText().toString();
+
+                        break;
+                    case R.id.radioButton4:
+
+                        RadioButton r4 = (RadioButton) findViewById(R.id.radioButton4);
+                        myMsg = r4.getText().toString();
+
+                        break;
+                    case R.id.radioButton5:
+
+                        RadioButton r5 = (RadioButton) findViewById(R.id.radioButton5);
+                        myMsg = r5.getText().toString();
+
+                        break;
+                }
+            }
+        });
+        radioGroup.setEnabled(false);
+
+
+
         sendSms.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                String myMsg = editText.getText().toString();
-                stuff = "Hi, I am from Talk2Me. I need help with some stuff: " + myMsg;
+
+                stuff = "Hi, I am from Talk2Me. I need help with " + myMsg;
                 sendMsg(helper,stuff); //helper
+                sendMsg(moderator, stuff);
             }
         });
     }
@@ -35,4 +94,6 @@ public class MainActivity extends AppCompatActivity {
         SmsManager sms = SmsManager.getDefault();
         sms.sendTextMessage(theNumber,null,myMsg,null,null);
     }
+
+
 }
