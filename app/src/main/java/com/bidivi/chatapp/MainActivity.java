@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     String myMsg;
     String stuff;
     String helper = "4086878302"; // should have a lot of numbers in database
-    String moderator = "8285392311";
     // each person that needs help is connected to another in
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +83,9 @@ public class MainActivity extends AppCompatActivity {
             {
 
                 stuff = "Hi, I am from Talk2Me. I need help with " + myMsg;
-                sendMsg(helper,stuff); //helper
-                sendMsg(moderator, stuff);
+                sendMsg(helper,stuff);
+                Intent myIntent = new Intent(MainActivity.this, SMS.class);
+                startActivity(myIntent);
             }
         });
     }
