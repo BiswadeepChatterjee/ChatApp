@@ -16,7 +16,8 @@ import android.widget.Toast;
 public class SMS extends Activity
 {
     Button btnSendSMS;
-    EditText txtPhoneNo;
+    String helperPhone = "4086878302";
+//    EditText txtPhoneNo;
     EditText txtMessage;
 
     /** Called when the activity is first created. */
@@ -27,14 +28,14 @@ public class SMS extends Activity
         setContentView(R.layout.main);
 
         btnSendSMS = (Button) findViewById(R.id.btnSendSMS);
-        txtPhoneNo = (EditText) findViewById(R.id.txtPhoneNo);
+//        txtPhoneNo = (EditText) findViewById(R.id.txtPhoneNo);
         txtMessage = (EditText) findViewById(R.id.txtMessage);
 
         btnSendSMS.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
             {
-                String phoneNo = txtPhoneNo.getText().toString();
+                String phoneNo = helperPhone;
                 String message = txtMessage.getText().toString();
                 if (phoneNo.length()>0 && message.length()>0)
                     sendSMS(phoneNo, message);

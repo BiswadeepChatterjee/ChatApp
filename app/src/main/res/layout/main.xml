@@ -3,32 +3,34 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    >
+    android:weightSum="1">
+
     <TextView
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Enter the phone number of recipient"
-        />
-    <EditText
-        android:id="@+id/txtPhoneNo"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        />
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Message"
-        />
+        android:text="Dan (Helper)"
+        android:textSize="20dp"
+        android:layout_gravity="right"
+        android:textColor="#000000" />
+
     <EditText
         android:id="@+id/txtMessage"
-        android:layout_width="fill_parent"
+        android:layout_width="336dp"
         android:layout_height="150px"
         android:gravity="top"
-        />
+        android:layout_marginTop="350dp"
+        android:layout_gravity="center_horizontal"
+        android:backgroundTint="#e4bcbc"
+        android:background="#b96c6c"
+        android:textColor="#000000"
+        android:layout_marginBottom="10dp" />
+
     <Button
         android:id="@+id/btnSendSMS"
-        android:layout_width="fill_parent"
+        android:layout_width="148dp"
         android:layout_height="wrap_content"
-        android:text="Send SMS"
-        />
+        android:text="Send"
+        android:elegantTextHeight="false"
+        android:layout_marginTop="5dp"
+        android:textSize="20dp" />
 </LinearLayout>
