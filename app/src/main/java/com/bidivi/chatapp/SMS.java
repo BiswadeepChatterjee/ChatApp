@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.telephony.PhoneNumberUtils;
 import android.telephony.gsm.SmsManager;
+import android.telephony.gsm.SmsMessage;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -18,46 +20,25 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class SMS extends Activity
-{
+public class SMS extends Activity {
     Button btnSendSMS;
     String helperPhone = "4086878302";
-//    EditText txtPhoneNo;
     EditText txtMessage;
-    ArrayList<ChatMessage> chatHistory;
     ChatAdapter adapter;
     ListView messagesContainer;
+    ArrayList<ChatMessage> chatHistory = new ArrayList<ChatMessage>();
 
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
         btnSendSMS = (Button) findViewById(R.id.chatSendButton);
-//      txtPhoneNo = (EditText) findViewById(R.id.txtPhoneNo);
         txtMessage = (EditText) findViewById(R.id.messageEdit);
-
-      /*  btnSendSMS.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
-                String phoneNo = helperPhone;
-                String message = txtMessage.getText().toString();
-                if (phoneNo.length()>0 && message.length()>0)
-                    sendSMS(phoneNo, message);
-                else
-                    Toast.makeText(getBaseContext(),
-                            "Please enter a message.",
-                            Toast.LENGTH_SHORT).show();
-            }
-        });*/
-        initControls();
-    }
-
-    private void initControls() {
         messagesContainer = (ListView) findViewById(R.id.messagesContainer);
         txtMessage = (EditText) findViewById(R.id.messageEdit);
         btnSendSMS = (Button) findViewById(R.id.chatSendButton);
@@ -65,71 +46,23 @@ public class SMS extends Activity
         TextView companionLabel = (TextView) findViewById(R.id.friendLabel);
         RelativeLayout container = (RelativeLayout) findViewById(R.id.container);
         companionLabel.setText("Helper");// Hard Coded
-        loadDummyHistory();
+        adapter = new ChatAdapter(this, new ArrayList<ChatMessage>());
+        messagesContainer.setAdapter(adapter);
+        initControls();
+    }
 
-        btnSendSMS.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String phoneNo = helperPhone;
-                String message = txtMessage.getText().toString();
-                if (phoneNo.length()>0 && message.length()>0)
-                    sendSMS(phoneNo, message);
-                else
-                    Toast.makeText(getBaseContext(),
-                            "Please enter a message.",
-                            Toast.LENGTH_SHORT).show();
-
-                String messageText = txtMessage.getText().toString();
-                if (TextUtils.isEmpty(messageText)) {
-                    return;
-                }
-                ChatMessage chatMessage = new ChatMessage();
-                chatMessage.setId(122);//dummy
-                chatMessage.setMessage(messageText);
-                //chatMessage.setDate(DateFormat.getDateTimeInstance().format(new Date()));
-                chatMessage.setMe(true);
-
-                txtMessage.setText("");
-
-                displayMessage(chatMessage);
-            }
-        });
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter("android.provider.Telephony.SMS_RECEIVED");
+        registerReceiver(smsReceiver, filter);
     }
 
 
-    private void loadDummyHistory(){
-
-
-
-        chatHistory = new ArrayList<ChatMessage>();
-     /*   ChatMessage msg = new ChatMessage();
-        msg.setId(1);
-        msg.setMe(false);
-        msg.setMessage("Hi");
-        //msg.setDate(DateFormat.getDateTimeInstance().format(new Date()));
-        chatHistory.add(msg);
-        ChatMessage msg1 = new ChatMessage();
-        msg1.setId(2);
-        msg1.setMe(false);
-        msg1.setMessage("How r u doing???");
-        //msg1.setDate(DateFormat.getDateTimeInstance().format(new Date()));
-        chatHistory.add(msg1);
-        ChatMessage msg2 = new ChatMessage();
-        msg2.setId(3);
-        msg2.setMe(false);
-        msg2.setMessage(new SmsReceiver().getMessage());
-        chatHistory.add(msg2);*/
-
-        adapter = new ChatAdapter(SMS.this, new ArrayList<ChatMessage>());
-        messagesContainer.setAdapter(adapter);
-
-        /*for(int i=0; i<chatHistory.size(); i++) {
-            ChatMessage message = chatHistory.get(i);
-            displayMessage(message);
-        }
-*/
-
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(smsReceiver);
     }
 
     public void displayMessage(ChatMessage message) {
@@ -142,11 +75,7 @@ public class SMS extends Activity
         messagesContainer.setSelection(messagesContainer.getCount() - 1);
     }
 
-
-
-
-    private void sendSMS(String phoneNumber, String message)
-    {
+    private void sendSMS(String phoneNumber, String message) {
         String SENT = "SMS_SENT";
         String DELIVERED = "SMS_DELIVERED";
 
@@ -157,11 +86,10 @@ public class SMS extends Activity
                 new Intent(DELIVERED), 0);
 
         //---when the SMS has been sent---
-        registerReceiver(new BroadcastReceiver(){
+        registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context arg0, Intent arg1) {
-                switch (getResultCode())
-                {
+                switch (getResultCode()) {
                     case Activity.RESULT_OK:
                         Toast.makeText(getBaseContext(), "SMS sent",
                                 Toast.LENGTH_SHORT).show();
@@ -187,11 +115,10 @@ public class SMS extends Activity
         }, new IntentFilter(SENT));
 
         //---when the SMS has been delivered---
-        registerReceiver(new BroadcastReceiver(){
+        registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context arg0, Intent arg1) {
-                switch (getResultCode())
-                {
+                switch (getResultCode()) {
                     case Activity.RESULT_OK:
                         Toast.makeText(getBaseContext(), "SMS delivered",
                                 Toast.LENGTH_SHORT).show();
@@ -208,4 +135,74 @@ public class SMS extends Activity
         sms.sendTextMessage(phoneNumber, null, message, sentPI, deliveredPI);
     }
 
+    private void initControls() {
+
+        btnSendSMS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String phoneNo = helperPhone;
+                String message = txtMessage.getText().toString();
+                if (phoneNo.length() > 0 && message.length() > 0)
+                    sendSMS(phoneNo, message);
+                else
+                    Toast.makeText(getBaseContext(),
+                            "Please enter a message.",
+                            Toast.LENGTH_SHORT).show();
+
+                String messageText = txtMessage.getText().toString();
+                if (TextUtils.isEmpty(messageText)) {
+                    return;
+                }
+                ChatMessage chatMessage = new ChatMessage();
+                chatMessage.setId(122);//dummy
+                chatMessage.setMessage(messageText);
+                //chatMessage.setDate(DateFormat.getDateTimeInstance().format(new Date()));
+                chatMessage.setMe(true);
+
+                txtMessage.setText("");
+
+                displayMessage(chatMessage);
+            }
+        });
+    }
+
+
+    private BroadcastReceiver smsReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //---get the SMS message passed in---
+            Bundle bundle = intent.getExtras();
+            SmsMessage[] msgs = null;
+            String str = "";
+            String helperphone = "4086878302";
+            String phone = "";
+            if (bundle != null) {
+                //---retrieve the SMS message received---
+                Object[] pdus = (Object[]) bundle.get("pdus");
+                msgs = new SmsMessage[pdus.length];
+                for (int i = 0; i < msgs.length; i++) {
+                    msgs[i] = SmsMessage.createFromPdu((byte[]) pdus[i]);
+                    phone += msgs[i].getOriginatingAddress();
+                    if (PhoneNumberUtils.compare(helperphone, phone)) {
+                        //str += "SMS from " + msgs[i].getOriginatingAddress();
+                        //str += " :";
+                        str += msgs[i].getMessageBody().toString();
+
+                    }
+                }
+                //---display the new SMS message---
+                String sender = phone;
+                // apply sms filter
+                if (PhoneNumberUtils.compare(helperphone, sender)) {
+                    //Toast.makeText(context, str, Toast.LENGTH_LONG).show();
+                    ChatMessage chatMessage = new ChatMessage();
+                    chatMessage.setMe(false);
+                    chatMessage.setId(1);
+                    chatMessage.setMessage(str);
+                    displayMessage(chatMessage);
+
+                }
+            }
+        }
+    };
 }
