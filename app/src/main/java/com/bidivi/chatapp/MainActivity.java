@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     RadioButton radioButton5;
     String myMsg;
     String stuff;
-    String helper = "4086878302"; // should have a lot of numbers in database
+    String helper = "4087180303"; // should have a lot of numbers in database
     // each person that needs help is connected to another in
     @Override
     protected void onCreate(Bundle savedInstanceState) {

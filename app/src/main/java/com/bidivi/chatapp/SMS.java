@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 public class SMS extends Activity {
     Button btnSendSMS;
-    String helperPhone = "4086878302";
+    String helperPhone = "4087180303";
     EditText txtMessage;
     ChatAdapter adapter;
     ListView messagesContainer;
@@ -45,7 +45,7 @@ public class SMS extends Activity {
         TextView meLabel = (TextView) findViewById(R.id.meLbl);
         TextView companionLabel = (TextView) findViewById(R.id.friendLabel);
         RelativeLayout container = (RelativeLayout) findViewById(R.id.container);
-        companionLabel.setText("Harambeisgodubitch");// Hard Coded
+        companionLabel.setText("Helper");// Hard Coded
         adapter = new ChatAdapter(this, new ArrayList<ChatMessage>());
         messagesContainer.setAdapter(adapter);
         initControls();
@@ -174,7 +174,7 @@ public class SMS extends Activity {
             Bundle bundle = intent.getExtras();
             SmsMessage[] msgs = null;
             String str = "";
-            String helperphone = "4086878302";
+            String helperphone = "4087180303";
             String phone = "";
             if (bundle != null) {
                 //---retrieve the SMS message received---
