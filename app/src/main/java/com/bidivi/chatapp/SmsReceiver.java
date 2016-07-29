@@ -1,18 +1,24 @@
 
 package com.bidivi.chatapp;
-        import android.content.BroadcastReceiver;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.gsm.SmsMessage;
-        import android.widget.Toast;
+import android.widget.ListView;
+import android.widget.Toast;
 
-        public class SmsReceiver extends BroadcastReceiver
+import java.util.ArrayList;
+
+public class SmsReceiver extends BroadcastReceiver
         {
+            private String s = "";
+
             @Override
             public void onReceive(Context context, Intent intent)
             {
+
                 //---get the SMS message passed in---
                 Bundle bundle = intent.getExtras();
                 SmsMessage[] msgs = null;
@@ -28,18 +34,27 @@ import android.telephony.gsm.SmsMessage;
                         msgs[i] = SmsMessage.createFromPdu((byte[])pdus[i]);
                         phone += msgs[i].getOriginatingAddress();
                         if (PhoneNumberUtils.compare(helperphone, phone)) {
-                            str += "SMS from " + msgs[i].getOriginatingAddress();
-                            str += " :";
+                            //str += "SMS from " + msgs[i].getOriginatingAddress();
+                            //str += " :";
                             str += msgs[i].getMessageBody().toString();
+
                         }
                     }
                     //---display the new SMS message---
                     String sender = phone;
                     // apply sms filter
                     if (PhoneNumberUtils.compare(helperphone, sender)) {
-                        Toast.makeText(context, str, Toast.LENGTH_SHORT).show();
-                    }
+                        Toast.makeText(context, str, Toast.LENGTH_LONG).show();
+                        s = str;
+                }
+
                 }
 
             }
+            public String getMessage()
+            {
+                return s;
+            }
+
+
         }
