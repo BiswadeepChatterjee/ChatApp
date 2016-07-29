@@ -45,7 +45,7 @@ public class SMS extends Activity {
         TextView meLabel = (TextView) findViewById(R.id.meLbl);
         TextView companionLabel = (TextView) findViewById(R.id.friendLabel);
         RelativeLayout container = (RelativeLayout) findViewById(R.id.container);
-        companionLabel.setText("Fucker");// Hard Coded
+        companionLabel.setText("Harambeisgodubitch");// Hard Coded
         adapter = new ChatAdapter(this, new ArrayList<ChatMessage>());
         messagesContainer.setAdapter(adapter);
         initControls();
