@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
                 stuff = "Hi, I am from Talk2Me. I need help with " + myMsg;
                 sendMsg(helper,stuff);
+                setContentView(R.layout.animation);
                 Intent myIntent = new Intent(MainActivity.this, SMS.class);
                 startActivity(myIntent);
             }
