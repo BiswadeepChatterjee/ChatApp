@@ -1,19 +1,18 @@
 package com.bidivi.chatapp;
-import android.app.PendingIntent;
+
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 public class MainActivity extends AppCompatActivity {
 
     Button sendSms;
+    //TextView tv1;
     RadioGroup radioGroup;
     RadioButton radioButton;
     RadioButton radioButton2;
@@ -35,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
         radioButton4 = (RadioButton) findViewById(R.id.radioButton4);
         radioButton5 = (RadioButton) findViewById(R.id.radioButton5);
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+        /*tv1=(TextView)findViewById(R.id.textView3);
+        Typeface custom_font = Typeface.createFromAsset(getAssets(), "SF Gushing Meadow.ttf");
+        tv1.setTypeface(custom_font);*/
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
