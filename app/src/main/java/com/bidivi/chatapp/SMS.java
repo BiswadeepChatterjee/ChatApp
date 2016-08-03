@@ -200,7 +200,7 @@ public class SMS extends Activity {
                     chatMessage.setId(1);
                     chatMessage.setMessage(str);
                     displayMessage(chatMessage);
-
+                    //a
                 }
             }
         }
