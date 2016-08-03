@@ -60,13 +60,6 @@
             android:text="Friend"
             android:textSize="20dp" />
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageButton3"
-            android:src="@drawable/icejjfish"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="50dp" />
 
     </RelativeLayout>
 </LinearLayout>
