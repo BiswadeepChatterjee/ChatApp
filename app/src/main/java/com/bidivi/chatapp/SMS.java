@@ -174,7 +174,7 @@ public class SMS extends Activity {
             Bundle bundle = intent.getExtras();
             SmsMessage[] msgs = null;
             String str = "";
-            String helperphone = "4087180303";
+            String helperphone = "4086878302";
             String phone = "";
             if (bundle != null) {
                 //---retrieve the SMS message received---
