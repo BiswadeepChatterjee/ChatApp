@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 public class SMS extends Activity {
     Button btnSendSMS;
-    String helperPhone = "4087180303";
+    String helperPhone = "4086878302";
     EditText txtMessage;
     ChatAdapter adapter;
     ListView messagesContainer;
